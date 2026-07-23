@@ -7,9 +7,7 @@ import { eq } from 'drizzle-orm';
 
 const reminderSchema = z.object({
     task: z.string(),
-    time: z.coerce.date(),
-    status: z.enum(['Pending', 'Completed', 'Avoided']),
-    remindCount: z.coerce.number()
+    time: z.coerce.date()
 });
 
 type NewReminder = typeof remindersTable.$inferInsert;
@@ -25,17 +23,13 @@ export async function postReminder(req: Request, res: Response) {
             });
         }
 
-        const { task, time, status, remindCount } = result.data;
-
-        const nextRemindTime = new Date(time.getTime());
+        const { task, time } = result.data;
 
         const newReminder: NewReminder = {
             id: uuidv4(),
             task,
             time,
-            status,
-            remindCount,
-            nextRemindTime
+            nextRemindTime: new Date(time.getTime())
         }
 
 

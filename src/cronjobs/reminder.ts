@@ -19,6 +19,7 @@ const remindUser = async () => {
         } else if(reminder.remindCount >= 5) {
             interval = 2 * 60 * 60 * 1000;
             message = `You've been putting this off for a while now: ${reminder.task}`;
+            await db.update(remindersTable).set({ status: 'Avoided' }).where(eq(remindersTable.id, reminder.id));
         } else if(reminder.remindCount >= 3) {
             interval = 30 * 60 * 1000;
             message = `Just a reminder, don't forget to do your task: ${reminder.task}`;

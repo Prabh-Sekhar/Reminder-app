@@ -4,7 +4,7 @@ import { deleteReminder, getReminders, markComplete, postReminder } from '../con
 const router = Router();
 
 router.post('/reminder', postReminder);
-router.post('/reminder/:id', markComplete);
+router.patch('/reminder/:id', markComplete);
 router.get('/reminder', getReminders);
 router.delete('/reminder/:id', deleteReminder)
 
